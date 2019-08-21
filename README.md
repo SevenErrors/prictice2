@@ -1,51 +1,51 @@
 # prictice2
 第二次课程
 
-1.Why should you have minimum scope for variables?
+# 1.Why should you have minimum scope for variables?
   作用域最小化，可以增强代码的可读性和可维护性，并降低出错的可能性
-2.Why should you understand performance of String Concatenation?
+# 2.Why should you understand performance of String Concatenation?
   字符串的拼接是日常开发中非常常用的业务，字符串的连接分为简单的+，StringBuilder拼接等，当有大量字符串需要进行拼接时，需要处理好拼接方式，能够大幅度提升程序的性能
   stringbuilder：如果能够确定目标字符串的最终长度，则可以使用stringbuilder。如果不能确定的话，也可以在一开始指定更大的容量，减少扩容的次数。
   string.concat：如果不能确定最终长度，但是能够确定字符串的个数，可以将它们放在一个数组中，并调用string.concat进行连接。
   stringlistbuilder：折衷方案，与string.concat相比其优势在于无需确定字符串个数，与stringbuilder相比其优势在于“扩容”操作只需复制一些引用即可
-3.What are the best practices with Exception Handling?
+# 3.What are the best practices with Exception Handling?
   异常处理是Java 开发中的一个重要部分。它是关乎每个应用的一个非功能性需求，是为了处理任何错误状况，比如资源不可访问，非法输入，空输入等等。Java提供了几个异常处理特性，以try，catch 和 finally 关键字的形式内建于语言自身之中。Java 编程语言也允许你创建新的异常，并通过使用 throw 和 throws关键字抛出它们。事实上，在Java编程中，Java的异常处理不单单是知道语法这么简单，它必须遵循标准的JDK库，和几个处理错误和异常的开源代码。这里我们将讨论一些关于异常处理的Java 最佳实践。
-1)为可恢复的错误使用检查型异常，为编程错误使用非检查型错误。
+## 1)为可恢复的错误使用检查型异常，为编程错误使用非检查型错误。
   选择检查型还是非检查型异常，对于Java编程人员来说，总是让人感到困惑。检查型异常保证你对错误条件提供异常处理代码，这是一种从语言到强制你编写健壮的代码的一种方式，但同时会引入大量杂乱的代码并导致其不可读。当然，如果你有替代品和恢复策略的话，捕捉异常并做些什么看起来似乎也在理。在Java 编程中选择检查型异常还是运行时异常。
-2)在finally程序块中关闭或者释放资源
+## 2)在finally程序块中关闭或者释放资源
   这在Java编程中，是一个广为人知的最佳实践，在处理网络和IO类的时候，相当于一个标准。在finally块中关闭资源， 在正常和异常执行的情况下，保证之前和稀缺资源的合理释放，这由finally块保证。从Java7开始，该语言有了一项更有趣的功能：资源管理自动化或者ARM块能实现这一功能。尽管如此，我们仍然要记住在finally块中关闭资源，这是对于释放像FileDescriptors这类，应用在socket和文件编程的情况下的有限资源很重要的。
-3)在堆栈跟踪中包含引起异常的原因
+## 3)在堆栈跟踪中包含引起异常的原因
   很多时候，当一个由另一个异常导致的异常被抛出的时候，Java库和开放源代码会将一种异常包装成另一种异常。日志记录和打印根异常就变得非常重要。 Java异常类提供了 getCause()方法来检索导致异常的原因，这些(原因)可以对异常的根层次的原因提供更多的信息。该Java实践对在进行调试或排除故障大有帮助。时刻记住，如果你将一个异常包装成另一种异常时，构造一个新异常要传递源异常。
-4)始终提供关于异常的有意义的完整的信息
+## 4)始终提供关于异常的有意义的完整的信息
   异常信息是最重要的地方，因为这是程序员首先看到的第一个地方，这里你能找到问题产生的根本原因。这里始终提供精确的真实的信息。
-5)避免过度使用检查型异常
+## 5)避免过度使用检查型异常
   检查型异常在强制执行方面有一定的优势，但同时它也破坏了代码，通过掩盖业务逻辑使代码可读性降低。只要你不过度使用检查型异常，你可以最大限度的减少这类情况，这样做的结果是你会得到更清洁的代码。你同样可以使用Java7的新功能，以移除重复项。
-6)将检查型异常转为运行时异常
+## 6)将检查型异常转为运行时异常
   这是在像Spring之类的多数框架中用来限制使用检查型异常的技术之一，大部分出自于JDBC的检查型异常，都被包装进 DataAccessException中，而(DataAccessException)异常是一种非检查型异常。这是Java最佳实践带来的好处，特定的异常限制到特定的模块，像 SQLException 放到DAO层，将意思明确的运行时异常抛到客户层。
-7)记住对性能而言，异常代价高昂
+## 7)记住对性能而言，异常代价高昂
   需要记住的一件事是异常代价高昂，同时让你的代码运行缓慢。假如你有方法从ResultSet(结果集)中进行读取，这时常会抛出SQLException 异常而不会移到下一元素，这将会比不抛出异常的正常代码执行的慢的多。因此最大限度的减少不必要的异常捕捉和移动，那里没有什么固定的原因。不要仅仅是抛出和捕捉异常，如果你能使用boolean变量去表示执行结果，可能会得到更整洁，更高性能的解决方案。修正错误的根源，避免不必须要的异常捕捉。
-8)避免catch块为空
+## 8)避免catch块为空
   没有什么比空的catch块更糟糕的了，因为它不仅隐藏了错误和异常，同时可能导致你的对象处于不可使用或者脏的状态。空的catch块只能变得无意义，如果你非常肯定异常不会继续以任何方式影响对象状态，但在程序执行期间，用日志记录错误依然是最好的(方法)。对于在Java编程中编写异常处理代码，这不仅仅是一个Java最佳实践，而是一个最通用的实践。
-9)使用标准异常
+## 9)使用标准异常
   我们的第九条最佳实践建议使用标准和内置的Java异常。使用标准异常而不是每次创建我们自己的异常，对于维护性和一致性，不管是现在还是以后，都是最好的选择。重用标准异常使代码更具可读性，因为大部分Java开发人员对标准的像源自于JDK的RuntimeException 异常，IllegalStateException 异常，Illegal Argument Exception 异常或者NullPointerException异常，(开发者)他们能一眼就知道每种异常的目的，而不是在代码里查找或者在文档里查找用户定义的异常的目的。
-10)记录任何方法抛出的异常
+## 10)记录任何方法抛出的异常
   Java提供了throw和throws关键字来抛出异常，在javadoc中用@throw记录任何方法可能会抛出的异常。如果你编写API或者公共接口，这就变得非常重要。任何方法抛出的异常都有相应的文档记录，这样你就能下意识的提醒任何使用(该方法)的人。
 这些就是所有在Java编程中在处理异常的时候需要遵循的最佳实践。让我们知道了什么是在Java编程中编写异常处理代码时需要遵循的实践。
-4. When is it recommended to prefer Unchecked Exceptions?
+# 4. When is it recommended to prefer Unchecked Exceptions?
   未检查异常是指你的程序逻辑本身有问题，比如数组越界、访问null对象，这种错误你自己是可以避免的。编译器不会强制你检查这种异常
   根据你业务的实际情况来判定是否需要使用未检查的异常来作为业务访问逻辑
-5.When do you use a Marker Interface?
+# 5.When do you use a Marker Interface?
   标记接口是计算机科学中的一种设计思路。编程语言本身不支持为类维护元数据。而标记接口则弥补了这个功能上的缺失——一个类实现某个没有任何方法的标记接口，实际上标记接口从某种意义上说就成为了这个类的元数据之一。运行时，通过编程语言的反射机制，我们就可以在代码里拿到这种元数据。
   JDK1.5之前维护元数据的重任就落在标记接口上了，当我们需要去拿到某种元数据时就可以使用标记接口来获取
-6.Why are ENUMS important for Readable Code?
+# 6.Why are ENUMS important for Readable Code?
   当实际使用时，我们可以进入到枚举中查看状态对应的中文描述，以此来提高代码可阅读性。而且维护起来也更加方便
-7.What is functional progtamming?
+# 7.What is functional progtamming?
   函数式编程是1种编程方式，它将电脑运算视为函数的计算。函数编程语言最重要的基础是λ演算（lambda calculus），而且λ演算的函数可以接受函数当作输入（参数）和输出（返回值）
-8.Why should you prefer Builder Pattern to build complex objects?
+# 8.Why should you prefer Builder Pattern to build complex objects?
   更好的封装内部结构，对使用者来说放心的去构造就好，不用担心顺序之类的问题，最后create就可以生成想要的事物，通过使用方式来看，可以传递各种类型的值，然后使用这种链式的调用，使代码看起来非常简洁调用也很方便，很好的将各种重载的方法串到一起，然后得到我们最终的结果
-9.Why should you avoid floats for Calculations?
+# 9.Why should you avoid floats for Calculations?
   浮点的编码跟整数编码是不一样的，计算时需要专门的寄存器和浮点计算单元来处理，一个浮点运算指令使用的CPU周期也更长，因此对于内核来说就会想尽量回避浮点数运算，譬如说浮点数经过定点整数转换后进行运算，效率会高很多，即使CPU带有浮点数运算部件，一般内核还是要避免直接进行浮点数运算，因为这些部件有可能被用户进程占用了，内核要判断这些浮点数部件是否被占用，保护现场，然后用浮点运算部件计算结果，恢复现场，开销会很大
-10.Why should you build the riskiest high priority features first?
+# 10.Why should you build the riskiest high priority features first?
   这样最高风险能经过最长的时间来验证，以及完善
 
 
